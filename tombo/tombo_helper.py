@@ -995,7 +995,7 @@ def get_files_list(fast5s_dir):
     """
     all_fast5s = []
     # walk through directory structure searching for fast5 files
-    for root, _, fns in os.walk(fast5s_dir):
+    for root, _, fns in os.walk(fast5s_dir, followlinks=True):
         for fn in fns:
             if not fn.endswith('.fast5'): continue
             all_fast5s.append(os.path.join(root, fn))
@@ -1032,7 +1032,7 @@ def get_files_list_and_lock_dirs(fast5s_dir, ignore_locks):
     lock_fns = []
     try:
         # walk through directory structure searching for fast5 files
-        for root, _, fns in os.walk(fast5s_dir):
+        for root, _, fns in os.walk(fast5s_dir, followlinks=True):
             lock_fn = get_lock_fn(root)
             if not ignore_locks and os.path.exists(lock_fn):
                 clear_tombo_locks(lock_fns)
